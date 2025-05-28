@@ -7,11 +7,13 @@ class Persona {
 protected:
     string nombre;
     int id;
+
 public:
-    Persona(string nombre, int id) : nombre(nombre), id(id) {}
+    Persona(string nombre, int id);
     virtual void mostrarDatos() const = 0;
     virtual void realizarTarea() const = 0;
-    virtual ~Persona() {}
+    virtual ~Persona();
 };
+
 #endif
 
