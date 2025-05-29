@@ -1,5 +1,6 @@
 #ifndef PERSONA_H
 #define PERSONA_H
+
 #include <string>
 using namespace std;
 
@@ -15,5 +16,11 @@ public:
     virtual ~Persona();
 };
 
-#endif
+Persona::Persona(string nombre, int id) {
+    this->nombre = nombre;
+    this->id = id;
+}
 
+Persona::~Persona() {}
+
+#endif
