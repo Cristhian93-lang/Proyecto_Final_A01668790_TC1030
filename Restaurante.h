@@ -1,85 +1,87 @@
 #ifndef RESTAURANTE_H
 #define RESTAURANTE_H
-
-#include "Menu.h"
+#define MAX 100
+#include "Plato.h"
 #include "Empleado.h"
-#include "Pedido.h"
-#include <vector>
-#include <map>
 #include <string>
+#include <iostream>
 using namespace std;
 
 class Restaurante {
 private:
     string nombre;
-    Menu* menu;
-    vector<Empleado*> empleados;
-    vector<Pedido> pedidos;
-    map<string, int> reservaciones;
+    Plato platos[MAX];
+    int numPlatos;
+    Empleado* empleados[MAX];
+    int numEmpleados;
 
 public:
     Restaurante(string nombre);
-    ~Restaurante();
 
     string getNombre() const;
     void agregarEmpleado(Empleado* e);
-    void agregarPlatoAlMenu(const Plato& p);
-    void tomarPedido(const Pedido& p);
-    void realizarReservacion(string nombreCliente, int cantidad);
-    Menu* getMenu() const;
     Empleado* getEmpleado(int index) const;
     int sizeEmpleados() const;
-    vector<Empleado*> getEmpleados() const; // ✅ Agregado aquí
+    Empleado** getEmpleados();
+
+    void agregarPlato(const Plato& p);
+    void mostrarMenu() const;
+    const Plato* getPlatos() const;
+    int sizePlatos() const;
 };
 
-// Implementaciones
-
-Restaurante::Restaurante(string nombre) : nombre(nombre) {
-    menu = new Menu();
-}
-
-Restaurante::~Restaurante() {
-    delete menu;
-    for (Empleado* e : empleados)
-        delete e;
-}
+Restaurante::Restaurante(string nombre)
+    : nombre(nombre), numPlatos(0), numEmpleados(0) {}
 
 string Restaurante::getNombre() const {
     return nombre;
 }
 
 void Restaurante::agregarEmpleado(Empleado* e) {
-    empleados.push_back(e);
-}
-
-void Restaurante::agregarPlatoAlMenu(const Plato& p) {
-    menu->agregarPlato(p);
-}
-
-void Restaurante::tomarPedido(const Pedido& p) {
-    pedidos.push_back(p);
-}
-
-void Restaurante::realizarReservacion(string nombreCliente, int cantidad) {
-    reservaciones[nombreCliente] = cantidad;
-}
-
-Menu* Restaurante::getMenu() const {
-    return menu;
+    if (numEmpleados < MAX) {
+        empleados[numEmpleados++] = e;
+    }
 }
 
 Empleado* Restaurante::getEmpleado(int index) const {
-    if (index >= 0 && index < empleados.size())
+    if (index >= 0 && index < numEmpleados)
         return empleados[index];
     return nullptr;
 }
 
 int Restaurante::sizeEmpleados() const {
-    return empleados.size();
+    return numEmpleados;
 }
 
-vector<Empleado*> Restaurante::getEmpleados() const {
+Empleado** Restaurante::getEmpleados() {
     return empleados;
+}
+
+void Restaurante::agregarPlato(const Plato& p) {
+    if (numPlatos < MAX) {
+        platos[numPlatos++] = p;
+    }
+}
+
+void Restaurante::mostrarMenu() const {
+    if (numPlatos == 0) {
+        cout << "El menu esta vacio." << endl;
+        return;
+    }
+
+    cout << "------ MENU ------" << endl;
+    for (int i = 0; i < numPlatos; ++i) {
+        cout << i + 1 << ". ";
+        platos[i].mostrarPlato();
+    }
+}
+
+const Plato* Restaurante::getPlatos() const {
+    return platos;
+}
+
+int Restaurante::sizePlatos() const {
+    return numPlatos;
 }
 
 #endif
