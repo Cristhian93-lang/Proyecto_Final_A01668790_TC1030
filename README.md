@@ -12,6 +12,7 @@ Aunque todavía estoy en una etapa inicial, este proyecto ya me está ayudando a
 - En Pedido y Reservacion, si el usuario no confirma correctamente la contraseña, no se realiza la acción, pero tampoco se registra un intento fallido ni se informa al sistema.
 ## Consideraciones
 El programa esta desarrollado con C++ estandar y corre en consalo en los siguientes sistemas operativos:
+
 Compilacion:
 "g++ main.cpp Cliente.h Empleado.h Pedido.h Persona.h Plato.h Reservacion.h Restaurante.h -o proyecto
 "
