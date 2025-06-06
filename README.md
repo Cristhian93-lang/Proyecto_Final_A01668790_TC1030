@@ -13,10 +13,11 @@ Aunque todavía estoy en una etapa inicial, este proyecto ya me está ayudando a
 ## Consideraciones
 El programa esta desarrollado con C++ estandar y corre en consalo en los siguientes sistemas operativos:
 Compilacion:
-"g++ main.cpp -o plataforma_pedidos"
+"g++ main.cpp Cliente.h Empleado.h Pedido.h Persona.h Plato.h Reservacion.h Restaurante.h -o proyecto
+"
 Ejecución:
-- En Linux y macOS "./plataforma_pedidos"
-- En Windows "plataforma_pedidos.exe"
+- En Linux y macOS "./proyecto"
+- En Windows "proyecto.exe"
   
 Este es el digrama UML del programa:
 ![PFDUML](https://github.com/user-attachments/assets/87c1cd16-ab8d-4acb-a56f-fc92f5e58d4c)
