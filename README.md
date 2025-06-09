@@ -14,8 +14,8 @@ Aunque todavía estoy en una etapa inicial, este proyecto ya me está ayudando a
 El programa esta desarrollado con C++ estandar y corre en consalo en los siguientes sistemas operativos:
 
 Compilacion:
-"g++ main.cpp Cliente.h Empleado.h Pedido.h Persona.h Plato.h Reservacion.h Restaurante.h -o proyecto
-"
+"g++ main.cpp -o proyecto"
+
 Ejecución:
 - En Linux y macOS "./proyecto"
 - En Windows "proyecto.exe"
