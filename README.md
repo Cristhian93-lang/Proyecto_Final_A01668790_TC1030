@@ -21,7 +21,10 @@ Ejecución:
 - En Windows "proyecto.exe"
   
 Este es el digrama UML del programa:
-![PFDUML](https://github.com/user-attachments/assets/87c1cd16-ab8d-4acb-a56f-fc92f5e58d4c)
+
+![PFDUML-2](https://github.com/user-attachments/assets/0e82a83a-fa76-4401-9b82-ea704e76ee0f)
+
+
 
 
 
