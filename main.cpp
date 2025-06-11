@@ -19,10 +19,25 @@ string obtenerHoraActual() {
 
 bool confirmarContrasena(Cliente* cliente) {
     string intento;
-    cout << "\nIngrese su contrasena para confirmar su orden: ";
-    getline(cin, intento);
-    return intento == cliente->getContrasena();
+    int intentosRestantes = 3;
+
+    while (intentosRestantes > 0) {
+        cout << "\nIngrese su contrasena para confirmar su orden (" << intentosRestantes << " intentos permitidos): ";
+        getline(cin, intento);
+
+        if (intento == cliente->getContrasena()) {
+            cout << "Confirmacion exitosa.\n";
+            return true;
+        } else {
+            cout << "Contrasena incorrecta.\n";
+            intentosRestantes--;
+        }
+    }
+
+    cout << "Demasiados intentos fallidos. La orden ha sido cancelada.\n";
+    return false;
 }
+
 
 int main() {
     string nombre, correo, telefono, direccion, contrasena;
