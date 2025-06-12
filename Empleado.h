@@ -4,7 +4,7 @@
  * A01668790
  * Esta clase define el objeto Empleado, que representa a un trabajador
  * del restaurante. Hereda de la clase abstracta Persona e incluye el
- * atributo adicional 'rol' para definir su funcion (ej. mesero).
+ * atributo adicional 'rol' para definir su funcion.
  * Permite mostrar su informacion y describir su actividad.
  */
 

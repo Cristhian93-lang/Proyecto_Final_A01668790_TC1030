@@ -2,9 +2,11 @@
  * Proyecto Plataforma de Pedidos y Reservaciones
  * Cristhian Viery Maida Suarez
  * A01668790
- * Archivo principal del programa. Permite registrar un cliente,
- * realizar pedidos o reservaciones, seleccionar restaurante,
- * platos, empleados y generar facturas con metodo de pago.
+ * Es un programa que simula una plataforma para realizar pedidos de comida
+ * y reservaciones en distintos restaurantes. Permite registrar un cliente,
+ * seleccionar un restaurante, elegir platos del menu o hacer una reservacion
+ * con hora, mesa y empleado asignado. Al finalizar cada accion, se genera
+ * una factura con los datos del cliente y el metodo de pago.
  */
 
 #include <iostream>
@@ -262,7 +264,7 @@ int main() {
     for (int i = 0; i < 5; i++) {
         restaurantes[i]->agregarEmpleado(new Empleado("Juan - " + restaurantes[i]->getNombre(), 10, baseTel + "0", direccionSucursal, "Mesero"));
         restaurantes[i]->agregarEmpleado(new Empleado("Ana - " + restaurantes[i]->getNombre(), 11, baseTel + "1", direccionSucursal, "Mesero"));
-        restaurantes[i]->agregarEmpleado(new Empleado("Mary - " + restaurantes[i]->getNombre(), 12, baseTel + "2", direccionSucursal, "Mesero"));
+        restaurantes[i]->agregarEmpleado(new Empleado("Mary - " + restaurantes[i]->getNombre(), 12, baseTel + "2", direccionSucursal, "Cocinera"));
         restaurantes[i]->agregarEmpleado(new Empleado("Diego - " + restaurantes[i]->getNombre(), 13, baseTel + "3", direccionSucursal, "Mesero"));
     }
 
