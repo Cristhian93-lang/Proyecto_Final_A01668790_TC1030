@@ -1,6 +1,16 @@
+/*
+ * Proyecto Plataforma de Pedidos y Reservaciones
+ * Cristhian Viery Maida Suarez
+ * A01668790
+ * Archivo principal del programa. Permite registrar un cliente,
+ * realizar pedidos o reservaciones, seleccionar restaurante,
+ * platos, empleados y generar facturas con metodo de pago.
+ */
+
 #include <iostream>
 #include <string>
 #include <ctime>
+
 #include "Cliente.h"
 #include "Empleado.h"
 #include "Restaurante.h"
@@ -14,6 +24,14 @@ bool confirmarContrasena(Cliente* cliente);
 void procesarPedido(Cliente* cliente, Restaurante* restaurantes[], int totalRestaurantes);
 void procesarReservacion(Cliente* cliente, Restaurante* restaurantes[], int totalRestaurantes);
 
+/**
+ * obtenerHoraActual obtiene la hora actual del sistema
+ *
+ * Formatea la hora en formato HH:MM como string.
+ *
+ * @param
+ * @return string con la hora actual
+ */
 string obtenerHoraActual() {
     time_t now = time(0);
     tm* ltm = localtime(&now);
@@ -22,6 +40,14 @@ string obtenerHoraActual() {
     return string(buffer);
 }
 
+/**
+ * confirmarContrasena valida la contrasena del cliente
+ *
+ * Permite hasta 3 intentos. Si todos fallan, se cancela la operacion.
+ *
+ * @param cliente apuntador al cliente que confirma
+ * @return true si la contrasena es correcta, false si falla
+ */
 bool confirmarContrasena(Cliente* cliente) {
     string intento;
     int intentosRestantes = 3;
@@ -43,6 +69,17 @@ bool confirmarContrasena(Cliente* cliente) {
     return false;
 }
 
+/**
+ * procesarPedido ejecuta el flujo de un pedido
+ *
+ * Permite seleccionar un restaurante, agregar platos disponibles,
+ * confirmar contrasena y seleccionar metodo de pago.
+ *
+ * @param cliente cliente que realiza el pedido
+ * @param restaurantes arreglo de restaurantes disponibles
+ * @param totalRestaurantes cantidad de restaurantes
+ * @return
+ */
 void procesarPedido(Cliente* cliente, Restaurante* restaurantes[], int totalRestaurantes) {
     cout << "\nSeleccione un restaurante:\n";
     for (int i = 0; i < totalRestaurantes; i++)
@@ -97,6 +134,17 @@ void procesarPedido(Cliente* cliente, Restaurante* restaurantes[], int totalRest
     }
 }
 
+/**
+ * procesarReservacion ejecuta el flujo de una reservacion
+ *
+ * Permite seleccionar restaurante, hora, mesa, empleado
+ * y metodo de pago, luego genera factura.
+ *
+ * @param cliente cliente que realiza la reservacion
+ * @param restaurantes arreglo de restaurantes disponibles
+ * @param totalRestaurantes cantidad de restaurantes
+ * @return
+ */
 void procesarReservacion(Cliente* cliente, Restaurante* restaurantes[], int totalRestaurantes) {
     cout << "\nSeleccione un restaurante:\n";
     for (int i = 0; i < totalRestaurantes; i++)
@@ -148,6 +196,15 @@ void procesarReservacion(Cliente* cliente, Restaurante* restaurantes[], int tota
     }
 }
 
+/**
+ * Funcion principal del programa
+ *
+ * Permite registrar al cliente, mostrar menu principal
+ * y gestionar pedidos o reservaciones.
+ *
+ * @param
+ * @return int
+ */
 int main() {
     string nombre, correo, telefono, direccion, contrasena;
 
@@ -168,6 +225,7 @@ int main() {
         new Restaurante("KFC")
     };
 
+    // Se agregan platos a cada restaurante
     restaurantes[0]->agregarPlato(Plato("Pizza Pepperoni", 100.0, true));
     restaurantes[0]->agregarPlato(Plato("Pizza Hawaiana", 90.0, false));
     restaurantes[0]->agregarPlato(Plato("Super Cheese Pepperoni", 199.0, true));
@@ -198,6 +256,7 @@ int main() {
     restaurantes[4]->agregarPlato(Plato("Ke Tiras Lovers 9", 359.0, true));
     restaurantes[4]->agregarPlato(Plato("Coca Cola Lata", 29.0, false));
 
+    // Se agregan empleados a cada restaurante
     string baseTel = "555-000";
     string direccionSucursal = "Sucursal Centro";
     for (int i = 0; i < 5; i++) {
@@ -207,6 +266,7 @@ int main() {
         restaurantes[i]->agregarEmpleado(new Empleado("Diego - " + restaurantes[i]->getNombre(), 13, baseTel + "3", direccionSucursal, "Mesero"));
     }
 
+    // Menu principal
     int opcion;
     do {
         cout << "\n=== Menu Principal ===\n1. Pedidos\n2. Reservaciones\n3. Salir\nSeleccione una opcion: ";
@@ -221,4 +281,3 @@ int main() {
 
     return 0;
 }
-
