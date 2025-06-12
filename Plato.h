@@ -1,5 +1,6 @@
 #ifndef PLATO_H
 #define PLATO_H
+
 #include <string>
 #include <iostream>
 using namespace std;
@@ -13,13 +14,15 @@ private:
 public:
     Plato(); 
     Plato(string nombre, float precio, bool disponible);
+
     string getNombre() const;
     float getPrecio() const;
     bool estaDisponible() const;
     void mostrarPlato() const;
 };
 
-Plato::Plato() : nombre(""), precio(0.0), disponible(false) {}
+Plato::Plato()
+    : nombre(""), precio(0.0), disponible(false) {}
 
 Plato::Plato(string nombre, float precio, bool disponible)
     : nombre(nombre), precio(precio), disponible(disponible) {}

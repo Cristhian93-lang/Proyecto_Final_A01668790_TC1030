@@ -1,5 +1,6 @@
 #ifndef RESTAURANTE_H
 #define RESTAURANTE_H
+
 #define MAX 100
 #include "Plato.h"
 #include "Empleado.h"

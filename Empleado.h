@@ -7,18 +7,22 @@ private:
     string rol;
 
 public:
-    Empleado(string nombre, int id, string telefono, string direccion, string rol);
+    Empleado(string nombre, int id, string telefono,
+             string direccion, string rol);
+
     void mostrarDatos() const;
     void realizarTarea() const;
     string getRol() const;
 };
 
-Empleado::Empleado(string nombre, int id, string telefono, string direccion, string rol)
+Empleado::Empleado(string nombre, int id, string telefono,
+                   string direccion, string rol)
     : Persona(nombre, id, telefono, direccion), rol(rol) {}
 
 void Empleado::mostrarDatos() const {
-    cout << "Empleado: " << nombre << ", ID: " << id << ", Tel: " << telefono
-         << ", Direccion: " << direccion << ", Rol: " << rol << endl;
+    cout << "Empleado: " << nombre << ", ID: " << id
+         << ", Tel: " << telefono << ", Direccion: " << direccion
+         << ", Rol: " << rol << endl;
 }
 
 void Empleado::realizarTarea() const {
@@ -30,5 +34,3 @@ string Empleado::getRol() const {
 }
 
 #endif
-
-

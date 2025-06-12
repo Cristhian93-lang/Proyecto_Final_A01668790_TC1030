@@ -1,6 +1,7 @@
 #ifndef PEDIDO_H
 #define PEDIDO_H
 #define MAX 100
+
 #include "Plato.h"
 #include "Cliente.h"
 #include <string>
@@ -29,10 +30,15 @@ public:
 };
 
 Pedido::Pedido()
-    : cliente(nullptr), numPlatos(0), horaEntrega(""), nombreRestaurante(""), metodoPago("No especificado") {}
+    : cliente(nullptr), numPlatos(0),
+      horaEntrega(""), nombreRestaurante(""),
+      metodoPago("No especificado") {}
 
-Pedido::Pedido(Cliente* cliente, string horaEntrega, string nombreRestaurante)
-    : cliente(cliente), horaEntrega(horaEntrega), nombreRestaurante(nombreRestaurante), numPlatos(0), metodoPago("No especificado") {}
+Pedido::Pedido(Cliente* cliente, string horaEntrega,
+               string nombreRestaurante)
+    : cliente(cliente), horaEntrega(horaEntrega),
+      nombreRestaurante(nombreRestaurante),
+      numPlatos(0), metodoPago("No especificado") {}
 
 void Pedido::agregarPlato(const Plato& p) {
     if (numPlatos < MAX) {
@@ -66,12 +72,14 @@ void Pedido::generarFactura() const {
     cout << "Hora de entrega: " << horaEntrega << endl;
     cout << "Metodo de pago: " << metodoPago << endl;
     cout << "Platos:\n";
+
     for (int i = 0; i < numPlatos; ++i) {
-        cout << "  - " << platosSolicitados[i].getNombre() << ": $" << platosSolicitados[i].getPrecio() << endl;
+        cout << "  - " << platosSolicitados[i].getNombre()
+             << ": $" << platosSolicitados[i].getPrecio() << endl;
     }
+
     cout << "Total a pagar: $" << calcularTotal() << endl;
     cout << "-------------------------------\n\n";
 }
 
 #endif
-

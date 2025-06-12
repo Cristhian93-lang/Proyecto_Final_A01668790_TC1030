@@ -8,7 +8,10 @@ private:
     string contrasena;
 
 public:
-    Cliente(string nombre, int id, string correo, string telefono, string direccion, string contrasena);
+    Cliente(string nombre, int id, string correo,
+            string telefono, string direccion,
+            string contrasena);
+
     void mostrarDatos() const;
     void realizarTarea() const;
 
@@ -16,12 +19,16 @@ public:
     string getContrasena() const;
 };
 
-Cliente::Cliente(string nombre, int id, string correo, string telefono, string direccion, string contrasena)
-    : Persona(nombre, id, telefono, direccion), correo(correo), contrasena(contrasena) {}
+Cliente::Cliente(string nombre, int id, string correo,
+                 string telefono, string direccion,
+                 string contrasena)
+    : Persona(nombre, id, telefono, direccion),
+      correo(correo), contrasena(contrasena) {}
 
 void Cliente::mostrarDatos() const {
-    cout << "Cliente: " << nombre << ", ID: " << id << ", Correo: " << correo
-         << ", Tel: " << telefono << ", Direccion: " << direccion << endl;
+    cout << "Cliente: " << nombre << ", ID: " << id
+         << ", Correo: " << correo << ", Tel: " << telefono
+         << ", Direccion: " << direccion << endl;
 }
 
 void Cliente::realizarTarea() const {

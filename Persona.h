@@ -13,7 +13,9 @@ protected:
     string direccion;
 
 public:
-    Persona(string nombre, int id, string telefono, string direccion);
+    Persona(string nombre, int id,
+            string telefono, string direccion);
+
     virtual ~Persona();
 
     virtual void mostrarDatos() const = 0;
@@ -26,8 +28,10 @@ public:
     void mostrarNombre() const;
 };
 
-Persona::Persona(string nombre, int id, string telefono, string direccion)
-    : nombre(nombre), id(id), telefono(telefono), direccion(direccion) {}
+Persona::Persona(string nombre, int id,
+                 string telefono, string direccion)
+    : nombre(nombre), id(id),
+      telefono(telefono), direccion(direccion) {}
 
 Persona::~Persona() {}
 
