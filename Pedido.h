@@ -18,7 +18,6 @@ private:
     string metodoPago;
 
 public:
-    Pedido();
     Pedido(Cliente* cliente, string horaEntrega, string nombreRestaurante);
 
     void agregarPlato(const Plato& p);
@@ -28,11 +27,6 @@ public:
     void setMetodoPago(string metodo);
     void generarFactura() const;
 };
-
-Pedido::Pedido()
-    : cliente(nullptr), numPlatos(0),
-      horaEntrega(""), nombreRestaurante(""),
-      metodoPago("No especificado") {}
 
 Pedido::Pedido(Cliente* cliente, string horaEntrega,
                string nombreRestaurante)

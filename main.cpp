@@ -9,6 +9,11 @@
 
 using namespace std;
 
+string obtenerHoraActual();
+bool confirmarContrasena(Cliente* cliente);
+void procesarPedido(Cliente* cliente, Restaurante* restaurantes[], int totalRestaurantes);
+void procesarReservacion(Cliente* cliente, Restaurante* restaurantes[], int totalRestaurantes);
+
 string obtenerHoraActual() {
     time_t now = time(0);
     tm* ltm = localtime(&now);
@@ -38,6 +43,110 @@ bool confirmarContrasena(Cliente* cliente) {
     return false;
 }
 
+void procesarPedido(Cliente* cliente, Restaurante* restaurantes[], int totalRestaurantes) {
+    cout << "\nSeleccione un restaurante:\n";
+    for (int i = 0; i < totalRestaurantes; i++)
+        cout << i + 1 << ". " << restaurantes[i]->getNombre() << endl;
+
+    int idx;
+    cout << "Opcion: "; cin >> idx; cin.ignore();
+    if (idx < 1 || idx > totalRestaurantes) return;
+
+    Restaurante* r = restaurantes[idx - 1];
+    Pedido p(cliente, obtenerHoraActual(), r->getNombre());
+
+    char seguir = 's';
+    while (seguir == 's' || seguir == 'S') {
+        r->mostrarMenu();
+        int sel;
+        cout << "Seleccione el plato: ";
+        cin >> sel; cin.ignore();
+        if (sel >= 1 && sel <= r->sizePlatos()) {
+            const Plato* lista = r->getPlatos();
+            Plato pl = lista[sel - 1];
+            if (!pl.estaDisponible()) {
+                cout << "El plato '" << pl.getNombre() << "' no esta disponible.\n";
+            } else {
+                p.agregarPlato(pl.getNombre(), pl.getPrecio());
+            }
+        }
+        cout << "Desea agregar otro plato? (s/n): ";
+        cin >> seguir; cin.ignore();
+    }
+
+    if (confirmarContrasena(cliente)) {
+        string metodoPago;
+        int mp;
+        cout << "Metodo de pago:\n1. Efectivo\n2. Tarjeta\nOpcion: ";
+        cin >> mp; cin.ignore();
+
+        if (mp == 1) {
+            metodoPago = "Efectivo";
+            cout << "Una vez que el delivery llegue podra pagarle con efectivo. Gracias por su compra.\n";
+        } else {
+            metodoPago = "Tarjeta";
+            string t, f, c;
+            cout << "Numero de tarjeta: "; getline(cin, t);
+            cout << "Fecha expiracion (MM/AA): "; getline(cin, f);
+            cout << "CVV: "; getline(cin, c);
+            cout << "Pago exitoso. Espere su pedido. Gracias por la compra.\n";
+        }
+
+        p.setMetodoPago(metodoPago);
+        p.generarFactura();
+    }
+}
+
+void procesarReservacion(Cliente* cliente, Restaurante* restaurantes[], int totalRestaurantes) {
+    cout << "\nSeleccione un restaurante:\n";
+    for (int i = 0; i < totalRestaurantes; i++)
+        cout << i + 1 << ". " << restaurantes[i]->getNombre() << endl;
+
+    int idx;
+    cout << "Opcion: "; cin >> idx; cin.ignore();
+    if (idx < 1 || idx > totalRestaurantes) return;
+
+    Restaurante* r = restaurantes[idx - 1];
+    int personas, mesa, idxEmp;
+    string hora;
+    cout << "Numero de personas: "; cin >> personas; cin.ignore();
+    cout << "Numero de mesa: "; cin >> mesa; cin.ignore();
+    cout << "Hora de reservacion (HH:MM): "; getline(cin, hora);
+
+    Empleado** emps = r->getEmpleados();
+    for (int i = 0; i < r->sizeEmpleados(); i++) {
+        cout << i + 1 << ". " << emps[i]->getNombre()
+             << " - " << emps[i]->getRol() << endl;
+    }
+
+    cout << "Seleccione empleado: ";
+    cin >> idxEmp; cin.ignore();
+    if (idxEmp < 1 || idxEmp > r->sizeEmpleados()) return;
+
+    if (confirmarContrasena(cliente)) {
+        Reservacion res(cliente, emps[idxEmp - 1], r->getNombre(), personas, mesa, hora);
+
+        string metodoPago;
+        int mp;
+        cout << "Metodo de pago:\n1. Efectivo\n2. Tarjeta\nOpcion: ";
+        cin >> mp; cin.ignore();
+
+        if (mp == 1) {
+            metodoPago = "Efectivo";
+            cout << "Gracias por su reservacion. Lo esperamos.\n";
+        } else {
+            metodoPago = "Tarjeta";
+            string t, f, c;
+            cout << "Numero de tarjeta: "; getline(cin, t);
+            cout << "Fecha expiracion (MM/AA): "; getline(cin, f);
+            cout << "CVV: "; getline(cin, c);
+            cout << "Pago exitoso. Gracias por su reservacion.\n";
+        }
+
+        res.setMetodoPago(metodoPago);
+        res.generarFactura();
+    }
+}
 
 int main() {
     string nombre, correo, telefono, direccion, contrasena;
@@ -103,108 +212,10 @@ int main() {
         cout << "\n=== Menu Principal ===\n1. Pedidos\n2. Reservaciones\n3. Salir\nSeleccione una opcion: ";
         cin >> opcion; cin.ignore();
 
-        if (opcion == 1) {
-            cout << "\nSeleccione un restaurante:\n";
-            for (int i = 0; i < 5; i++)
-                cout << i + 1 << ". " << restaurantes[i]->getNombre() << endl;
-
-            int idx;
-            cout << "Opcion: "; cin >> idx; cin.ignore();
-            if (idx < 1 || idx > 5) continue;
-
-            Restaurante* r = restaurantes[idx - 1];
-            Pedido p(cliente, obtenerHoraActual(), r->getNombre());
-
-            char seguir = 's';
-            while (seguir == 's' || seguir == 'S') {
-                r->mostrarMenu();
-                int sel;
-                cout << "Seleccione el plato: ";
-                cin >> sel; cin.ignore();
-                if (sel >= 1 && sel <= r->sizePlatos()) {
-                    const Plato* lista = r->getPlatos();
-                    Plato pl = lista[sel - 1];
-                    if (!pl.estaDisponible()) {
-                        cout << "El plato '" << pl.getNombre() << "' no esta disponible.\n";
-                    } else {
-                        p.agregarPlato(pl.getNombre(), pl.getPrecio());
-                    }
-                }
-                cout << "Desea agregar otro plato? (s/n): ";
-                cin >> seguir; cin.ignore();
-            }
-
-            if (confirmarContrasena(cliente)) {
-                string metodoPago;
-                int mp;
-                cout << "Metodo de pago:\n1. Efectivo\n2. Tarjeta\nOpcion: ";
-                cin >> mp; cin.ignore();
-
-                if (mp == 1) {
-                    metodoPago = "Efectivo";
-                    cout << "Una vez que el delivery llegue podra pagarle con efectivo. Gracias por su compra.\n";
-                } else {
-                    metodoPago = "Tarjeta";
-                    string t, f, c;
-                    cout << "Numero de tarjeta: "; getline(cin, t);
-                    cout << "Fecha expiracion (MM/AA): "; getline(cin, f);
-                    cout << "CVV: "; getline(cin, c);
-                    cout << "Pago exitoso. Espere su pedido. Gracias por la compra.\n";
-                }
-                p.setMetodoPago(metodoPago);
-                p.generarFactura();
-            }
-        }
-
-        else if (opcion == 2) {
-            cout << "\nSeleccione un restaurante:\n";
-            for (int i = 0; i < 5; i++)
-                cout << i + 1 << ". " << restaurantes[i]->getNombre() << endl;
-
-            int idx;
-            cout << "Opcion: "; cin >> idx; cin.ignore();
-            if (idx < 1 || idx > 5) continue;
-
-            Restaurante* r = restaurantes[idx - 1];
-            int personas, mesa, idxEmp;
-            string hora;
-            cout << "Numero de personas: "; cin >> personas; cin.ignore();
-            cout << "Numero de mesa: "; cin >> mesa; cin.ignore();
-            cout << "Hora de reservacion (HH:MM): "; getline(cin, hora);
-
-            Empleado** emps = r->getEmpleados();
-            for (int i = 0; i < r->sizeEmpleados(); i++) {
-                cout << i + 1 << ". " << emps[i]->getNombre()
-                    << " - " << emps[i]->getRol() << endl;
-            }
-
-            cout << "Seleccione empleado: ";
-            cin >> idxEmp; cin.ignore();
-            if (idxEmp < 1 || idxEmp > r->sizeEmpleados()) continue;
-
-            if (confirmarContrasena(cliente)) {
-                Reservacion res(cliente, emps[idxEmp - 1], r->getNombre(), personas, mesa, hora);
-
-                string metodoPago;
-                int mp;
-                cout << "Metodo de pago:\n1. Efectivo\n2. Tarjeta\nOpcion: ";
-                cin >> mp; cin.ignore();
-
-                if (mp == 1) {
-                    metodoPago = "Efectivo";
-                    cout << "Gracias por su reservacion. Lo esperamos.\n";
-                } else {
-                    metodoPago = "Tarjeta";
-                    string t, f, c;
-                    cout << "Numero de tarjeta: "; getline(cin, t);
-                    cout << "Fecha expiracion (MM/AA): "; getline(cin, f);
-                    cout << "CVV: "; getline(cin, c);
-                    cout << "Pago exitoso. Gracias por su reservacion.\n";
-                }
-                res.setMetodoPago(metodoPago);
-                res.generarFactura();
-            }
-        }
+        if (opcion == 1)
+            procesarPedido(cliente, restaurantes, 5);
+        else if (opcion == 2)
+            procesarReservacion(cliente, restaurantes, 5);
 
     } while (opcion != 3);
 

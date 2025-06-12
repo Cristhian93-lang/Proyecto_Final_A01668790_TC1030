@@ -24,8 +24,6 @@ public:
     string getNombre() const;
     string getTelefono() const;
     string getDireccion() const;
-
-    void mostrarNombre() const;
 };
 
 Persona::Persona(string nombre, int id,
@@ -45,10 +43,6 @@ string Persona::getTelefono() const {
 
 string Persona::getDireccion() const {
     return direccion;
-}
-
-void Persona::mostrarNombre() const {
-    cout << "Nombre: " << nombre << endl;
 }
 
 #endif

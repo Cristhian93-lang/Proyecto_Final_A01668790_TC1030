@@ -21,9 +21,6 @@ public:
     Reservacion(Cliente* cliente, Empleado* empleado, string restaurante,
                 int personas, int mesa, string hora);
 
-    Reservacion(Cliente* cliente, string restaurante,
-                int personas, string hora);
-
     float calcularCosto() const;
     void setMetodoPago(string metodo);
     void generarFactura() const;
@@ -35,13 +32,6 @@ Reservacion::Reservacion(Cliente* cliente, Empleado* empleado,
     : cliente(cliente), empleado(empleado),
       restaurante(restaurante), personas(personas),
       mesa(mesa), hora(hora),
-      metodoPago("No especificado") {}
-
-Reservacion::Reservacion(Cliente* cliente, string restaurante,
-                         int personas, string hora)
-    : cliente(cliente), empleado(nullptr),
-      restaurante(restaurante), personas(personas),
-      mesa(-1), hora(hora),
       metodoPago("No especificado") {}
 
 float Reservacion::calcularCosto() const {
@@ -67,11 +57,10 @@ void Reservacion::generarFactura() const {
     cout << ", Personas: " << personas << endl;
 
     if (empleado)
-    cout << "Empleado asignado: " << empleado->getNombre()
-         << " - " << empleado->getRol() << endl;
+        cout << "Empleado asignado: " << empleado->getNombre()
+             << " - " << empleado->getRol() << endl;
     else
-    cout << "Empleado asignado: No asignado" << endl;
-
+        cout << "Empleado asignado: No asignado" << endl;
 
     cout << "Metodo de pago: " << metodoPago << endl;
     cout << "Costo total: $" << calcularCosto() << endl;
