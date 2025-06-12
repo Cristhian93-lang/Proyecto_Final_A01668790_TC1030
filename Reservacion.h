@@ -67,9 +67,11 @@ void Reservacion::generarFactura() const {
     cout << ", Personas: " << personas << endl;
 
     if (empleado)
-        cout << "Empleado asignado: " << empleado->getNombre() << endl;
+    cout << "Empleado asignado: " << empleado->getNombre()
+         << " - " << empleado->getRol() << endl;
     else
-        cout << "Empleado asignado: No asignado" << endl;
+    cout << "Empleado asignado: No asignado" << endl;
+
 
     cout << "Metodo de pago: " << metodoPago << endl;
     cout << "Costo total: $" << calcularCosto() << endl;

@@ -94,8 +94,8 @@ int main() {
     for (int i = 0; i < 5; i++) {
         restaurantes[i]->agregarEmpleado(new Empleado("Juan - " + restaurantes[i]->getNombre(), 10, baseTel + "0", direccionSucursal, "Mesero"));
         restaurantes[i]->agregarEmpleado(new Empleado("Ana - " + restaurantes[i]->getNombre(), 11, baseTel + "1", direccionSucursal, "Mesero"));
-        restaurantes[i]->agregarEmpleado(new Empleado("Mary - " + restaurantes[i]->getNombre(), 12, baseTel + "2", direccionSucursal, "Cocinera"));
-        restaurantes[i]->agregarEmpleado(new Empleado("Diego - " + restaurantes[i]->getNombre(), 13, baseTel + "3", direccionSucursal, "Cocinera"));
+        restaurantes[i]->agregarEmpleado(new Empleado("Mary - " + restaurantes[i]->getNombre(), 12, baseTel + "2", direccionSucursal, "Mesero"));
+        restaurantes[i]->agregarEmpleado(new Empleado("Diego - " + restaurantes[i]->getNombre(), 13, baseTel + "3", direccionSucursal, "Mesero"));
     }
 
     int opcion;
@@ -173,8 +173,10 @@ int main() {
             cout << "Hora de reservacion (HH:MM): "; getline(cin, hora);
 
             Empleado** emps = r->getEmpleados();
-            for (int i = 0; i < r->sizeEmpleados(); i++)
-                cout << i + 1 << ". " << emps[i]->getNombre() << endl;
+            for (int i = 0; i < r->sizeEmpleados(); i++) {
+                cout << i + 1 << ". " << emps[i]->getNombre()
+                    << " - " << emps[i]->getRol() << endl;
+            }
 
             cout << "Seleccione empleado: ";
             cin >> idxEmp; cin.ignore();
