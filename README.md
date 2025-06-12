@@ -7,9 +7,9 @@ Aunque todavía estoy en una etapa inicial, este proyecto ya me está ayudando a
 
 ## En que casos habria fallas del proyecto:
 - Si el usuario ingresa un número de restaurante o plato que no existe, el programa puede omitir la acción o comportarse inesperadamente.
-- No hay validación de datos al ingresar números de tarjeta o formatos de hora, lo que podría permitir entradas incorrectas.
+- Si el usuario escribe letras o caracteres especiales en campos que esperan números (cin >>), el programa puede quedar en un estado de error sin dar respuesta ni recuperación clara.
 - Si se excede el límite de platos (MAX = 100) en una orden, no se agregan más y no se notifica al usuario.
-- En Pedido y Reservacion, si el usuario no confirma correctamente la contraseña, no se realiza la acción, pero tampoco se registra un intento fallido ni se informa al sistema.
+- En Pedido y Reservacion, si el usuario falla los tres intentos de contraseña, la operación se cancela.
 ## Consideraciones
 El programa esta desarrollado con C++ estandar y corre en consalo en los siguientes sistemas operativos:
 
@@ -22,7 +22,7 @@ Ejecución:
   
 Este es el digrama UML del programa:
 
-![PFDUML-2](https://github.com/user-attachments/assets/0e82a83a-fa76-4401-9b82-ea704e76ee0f)
+![DiagramaUMLPF](https://github.com/user-attachments/assets/c724723b-57b5-4ea0-81f6-42ccaff49751)
 
 
 
